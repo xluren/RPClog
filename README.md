@@ -8,7 +8,9 @@ rpclog == Read,Parse,Calculate log
 重写了下. 没别的,just write it for practise 
 
 如何使用:
-
+cd demo;nohup sh create_log.sh &
 lua run.lua 
 
 可能需要安装一个lfs,别的都是纯的lua,真心爱上了coroutine & closure
+
+

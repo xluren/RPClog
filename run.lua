@@ -7,7 +7,7 @@ local queue_tb={}
 local interval=10
 local regex_str="(%d+) (%w+)"
 local log_file="./demo/hello"
-local sleep_interval=1
+local sleep_interval=10
 local sink_option = "hello world"
 
 function mk_table(...)
@@ -23,13 +23,15 @@ end
 function produce(co_consumer)
     while true do
         _,status,line=coroutine.resume(read_file.read_line,log_file)
+        print(line.."xluren")
         if status ~=0 
         then 
+            coroutine.resume(co_consumer)
+            print ("I  am sleeping now")
             os.execute("sleep " .. sleep_interval)
         else
             mk_table(string.match(line, regex_str ))
         end 
-        coroutine.resume(co_consumer)
     end
 end
 
@@ -48,6 +50,7 @@ function consume()
                 deal_tb("",1)
                 processing_time=processing_time+interval
             end 
+            print("Q is  empty")
             coroutine.yield()
         else
             tb=queue_tb[1]
